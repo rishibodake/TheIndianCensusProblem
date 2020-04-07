@@ -47,5 +47,21 @@ public class StateCensusTest
         }
     }
 
+    //Test Case 1.4 Return Custom Exception for Incorrect Delimiter
+    @Test
+    public void givenStateCensusAnalyserFile_WhenImproperDelimiter_ReturnsException() throws IOException,CustomExceptions
+    {
+        try
+        {
+            StateCensusAnalyser censusAnalyserObject = new StateCensusAnalyser(CSV_FILE_PATH);
+            censusAnalyserObject.loadData();
+        }
+        catch (CustomExceptions e)
+        {
+            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_EXCEPTION,e.typeOfException);
+        }
+    }
+
+
 
 }

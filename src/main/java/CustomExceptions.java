@@ -1,7 +1,8 @@
 public class CustomExceptions extends Exception {
     public enum TypeOfException
     {
-        NO_FILE_FOUND
+        NO_FILE_FOUND,
+        INCORRECT_DELIMITER_EXCEPTION
     }
     public TypeOfException typeOfException;
 

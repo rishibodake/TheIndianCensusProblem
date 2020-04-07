@@ -12,17 +12,19 @@ public class StateCensusAnalyser
 {
     public static String CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
 
+    public StateCensusAnalyser(String path) {
+        CSV_FILE_PATH = path;
+    }
+
     int totalNumberOfRecords=0;
-    public int loadData() throws IOException {
+    public int loadData() throws IOException,CustomExceptions {
         try (Reader reader = newBufferedReader(Paths.get(CSV_FILE_PATH));)
         {
             CsvToBean<CSVStateCensus> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                     .withType(CSVStateCensus.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
-
             Iterator<CSVStateCensus> stateCensusCSVIterator = csvStateCensusBeanObj.iterator();
-
             while (stateCensusCSVIterator.hasNext())
             {
                 CSVStateCensus stateCensusCSV = stateCensusCSVIterator.next();
@@ -33,6 +35,11 @@ public class StateCensusAnalyser
                 totalNumberOfRecords++;
             }
         }
+        catch (IOException e)
+        {
+            throw new CustomExceptions(CustomExceptions.TypeOfException.NO_FILE_FOUND);
+        }
         return totalNumberOfRecords;
     }
+
 }

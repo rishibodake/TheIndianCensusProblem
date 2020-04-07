@@ -16,7 +16,6 @@ public class StateCensusTest
         int totalNumberOfRecords = censusAnalyserObject.loadData();
         Assert.assertEquals(29, totalNumberOfRecords);
     }
-
     //Test for improper file name
     @Test
     public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException() throws IOException
@@ -76,6 +75,4 @@ public class StateCensusTest
             Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
-
-
 }

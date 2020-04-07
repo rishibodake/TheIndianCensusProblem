@@ -127,5 +127,19 @@ public class StateCensusTest
             Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_EXCEPTION,e.typeOfException);
         }
     }
+    //TestCase 2.5 Test For Improper Header
+    @Test
+    public void givenStateCode_WhenImproperHeader_ReturnExceptionFileNotFound()
+    {
+        StateDataCensusAnalyser censusAnalyserObject = new StateDataCensusAnalyser(CSV_FILE_PATH);
+        try
+        {
+            censusAnalyserObject.loadStateCodeData();
+        }
+        catch (CustomExceptions e)
+        {
+            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+        }
+    }
 
 }

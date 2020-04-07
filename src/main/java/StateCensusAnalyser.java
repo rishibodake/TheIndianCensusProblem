@@ -41,7 +41,7 @@ public class StateCensusAnalyser
         }
         catch (RuntimeException e)
         {
-            throw new CustomExceptions(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_EXCEPTION);
+            throw new CustomExceptions(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
         }
         return totalNumberOfRecords;
     }

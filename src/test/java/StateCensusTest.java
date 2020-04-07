@@ -8,6 +8,7 @@ public class StateCensusTest
     public static String CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
     public static String CSV_FILE_PATH_FOR_WRONG_FILE = "./src/test/resources/StateCensus.csv";
     public static String CSV_FILE_PATH_FOR_WRONG_FILE_EXTENSION = "./src/test/resources/StateCensus.jpg";
+    public static String CSV_STATES_CODE_FILE_PATH = "./src/test/resources/StateCode.csv";
     //test will pass when totalNumberOfRecords are 29
     @Test
     public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws IOException, CustomExceptions
@@ -76,6 +77,12 @@ public class StateCensusTest
             Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
-
-
+    //Test case 2.1 Check Number Of Records are matches
+    @Test
+    public void givenStateCode_WhenTrue_ReturnNumberOfRecordMatch() throws IOException
+    {
+        StateDataCensusAnalyser csvStatesObject = new StateDataCensusAnalyser(CSV_STATES_CODE_FILE_PATH);
+        int noOfRecords = csvStatesObject.loadStateCodeData();
+        Assert.assertEquals(37, noOfRecords);
+    }
 }

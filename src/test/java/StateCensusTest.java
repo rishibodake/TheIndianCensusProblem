@@ -113,4 +113,19 @@ public class StateCensusTest
             Assert.assertEquals(CustomExceptions.TypeOfException.NO_FILE_FOUND,e.typeOfException);
         }
     }
+    //TestCase 2.4 Test For Improper Delimiter
+    @Test
+    public void givenStateCode_WhenImproperDelimiter_ReturnExceptionFileNotFound()
+    {
+        StateDataCensusAnalyser censusAnalyserObject = new StateDataCensusAnalyser(CSV_FILE_PATH);
+        try
+        {
+            censusAnalyserObject.loadStateCodeData();
+        }
+        catch (CustomExceptions e)
+        {
+            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_EXCEPTION,e.typeOfException);
+        }
+    }
+
 }

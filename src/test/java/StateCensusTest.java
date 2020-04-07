@@ -85,7 +85,7 @@ public class StateCensusTest
         int noOfRecords = csvStatesObject.loadStateCodeData();
         Assert.assertEquals(37, noOfRecords);
     }
-    //Test Case 2.2 Test For Improper Name
+    //TestCase 2.2 Test For Improper Name
     @Test
     public void givenStateCodeWhenFalse_ReturnExceptionFileNotFound() throws CustomExceptions
     {

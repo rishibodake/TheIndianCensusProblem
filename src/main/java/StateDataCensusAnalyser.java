@@ -1,12 +1,14 @@
-import com.opencsv.bean.CsvToBean;
+/*import com.opencsv.bean.CsvToBean;
         import com.opencsv.bean.CsvToBeanBuilder;
 
-        import java.io.IOException;
-        import java.io.Reader;
-        import java.nio.file.Paths;
-        import java.util.Iterator;
-
-        import static java.nio.file.Files.newBufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import static java.nio.file.Files.newBufferedReader;
 
 public class StateDataCensusAnalyser
 {
@@ -17,8 +19,9 @@ public class StateDataCensusAnalyser
         CSV_STATE_CODE_FILE_PATH = path;
     }
 
-    public int loadStateCodeData() throws IOException {
-        try (Reader reader = newBufferedReader(Paths.get(CSV_STATE_CODE_FILE_PATH));)
+    public int loadStateCodeData() throws CustomExceptions
+    {
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_STATE_CODE_FILE_PATH));)
         {
             CsvToBean<CSVStates> csvStateCensuses = new CsvToBeanBuilder(reader)
                     .withType(CSVStates.class)
@@ -35,6 +38,20 @@ public class StateDataCensusAnalyser
                 totalNumberOfRecords++;
             }
         }
+        catch (NoSuchFileException e)
+        {
+            throw new CustomExceptions("NO_SUCH_FILE_FOUND..",CustomExceptions.TypeOfException.NO_FILE_FOUND);
+        }
+        catch (RuntimeException e)
+        {
+            throw new CustomExceptions("HEADER OR DELIMITER ERROR",CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         return totalNumberOfRecords;
     }
 }
+
+ */

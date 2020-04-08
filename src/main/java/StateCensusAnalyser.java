@@ -3,47 +3,62 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static java.nio.file.Files.newBufferedReader;
-
+//State Code and State Census Classes in one class
 public class StateCensusAnalyser
 {
-    public static String CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-
-    public StateCensusAnalyser(String path) {
-        CSV_FILE_PATH = path;
-    }
-
-    int totalNumberOfRecords=0;
-    public int loadData() throws IOException,CustomExceptions {
-        try (Reader reader = newBufferedReader(Paths.get(CSV_FILE_PATH));)
+    OpenCSV openCSV = new OpenCSV();
+    public Integer readFile(String filePath) throws Exception //it will load data from StateCensusDada.csv
+    {
+        try (Reader reader = Files.newBufferedReader(Paths.get(filePath)) )
         {
-            CsvToBean<CSVStateCensus> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
-                    .withType(CSVStateCensus.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-            Iterator<CSVStateCensus> stateCensusCSVIterator = csvStateCensusBeanObj.iterator();
-            while (stateCensusCSVIterator.hasNext())
-            {
-                CSVStateCensus stateCensusCSV = stateCensusCSVIterator.next();
-                System.out.println("State: " +stateCensusCSV.getState());
-                System.out.println("Area: " +stateCensusCSV.getAreaInSqKm());
-                System.out.println("Density: " +stateCensusCSV.getDensityPerSqKm());
-                System.out.println("Population: " +stateCensusCSV.getPopulation());
-                totalNumberOfRecords++;
-            }
+            List<CSVStates> listCSVfile = openCSV.getCSVFileList(reader,CSVStates.class);
+            return listCSVfile.size();
         }
-        catch (IOException e)
+        catch (NoSuchFileException e)
         {
-            throw new CustomExceptions(CustomExceptions.TypeOfException.NO_FILE_FOUND);
+            throw new CSVBuilderException("FILE IS NOT FOUND.",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
         }
         catch (RuntimeException e)
         {
-            throw new CustomExceptions(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
         }
-        return totalNumberOfRecords;
+        catch (Exception e)
+        {
+            e.getStackTrace();
+        }
+        return (null);
     }
 
-}
+
+
+    public Integer loadIndianStateCodeData (String csvFilePath) throws CSVBuilderException
+    {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath)) )
+        {
+            List<CSVStates> listCSVfile = openCSV.getCSVFileList(reader,CSVStates.class);
+            return listCSVfile.size();
+        }
+        catch (NoSuchFileException e)
+        {
+            throw new CSVBuilderException("ENTERED FILE IS NOT FOUND..",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
+        }
+        catch (RuntimeException e)
+        {
+            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+        }
+        catch (Exception e)
+        {
+            e.getStackTrace();
+        }
+            return null;
+        }
+    }
+

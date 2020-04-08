@@ -1,4 +1,4 @@
-public class CustomExceptions extends Exception {
+public class CSVBuilderException extends Exception {
     public enum TypeOfException
     {
         NO_FILE_FOUND,
@@ -7,7 +7,7 @@ public class CustomExceptions extends Exception {
     }
     public TypeOfException typeOfException;
 
-    public CustomExceptions(String message,TypeOfException typeOfException)
+    public CSVBuilderException(String message, TypeOfException typeOfException)
     {
         super(message);
         this.typeOfException=typeOfException;

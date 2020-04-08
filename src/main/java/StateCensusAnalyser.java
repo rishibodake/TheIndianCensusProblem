@@ -26,11 +26,11 @@ public class StateCensusAnalyser
         }
         catch (RuntimeException e)
         {
-            throw new CustomExceptions("HEADER OR DELIMITER ERROR",CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+            throw new CSVBuilderException("HEADER OR DELIMITER ERROR",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
         }
     }
 
-    public Integer loadIndianStateCodeData (String csvFilePath) throws CustomExceptions {
+    public Integer loadIndianStateCodeData (String csvFilePath) throws CSVBuilderException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath)))
         {
             Iterator<CSVStates> statesCSVIterator = OpenCSV.CSVfileIterator(reader, CSVStates.class);
@@ -40,11 +40,11 @@ public class StateCensusAnalyser
         }
          catch (NoSuchFileException e)
          {
-                throw new CustomExceptions("NO_SUCH_FILE_FOUND..",CustomExceptions.TypeOfException.NO_FILE_FOUND);
+                throw new CSVBuilderException("NO_SUCH_FILE_FOUND..",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
          }
         catch (RuntimeException e)
         {
-            throw new CustomExceptions("HEADER OR DELIMITER ERROR",CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+            throw new CSVBuilderException("HEADER OR DELIMITER ERROR",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
         }
         catch (Exception e)
         {

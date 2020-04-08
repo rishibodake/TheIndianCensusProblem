@@ -23,9 +23,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.readFile("src/test/resources/StateCensus.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.NO_FILE_FOUND,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.NO_FILE_FOUND,e.typeOfException);
         }
     }
 
@@ -37,9 +37,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.readFile("src/test/resources/StateCensusData.jpg");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.NO_FILE_FOUND,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.NO_FILE_FOUND,e.typeOfException);
         }
     }
 
@@ -51,9 +51,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.readFile("src/test/resources/StateCensusData.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
 
@@ -65,9 +65,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.readFile("src/test/resources/StateCensusData.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
     //Test case 2.1 Check Number Of Records are matches
@@ -86,9 +86,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeWrong.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.NO_FILE_FOUND,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.NO_FILE_FOUND,e.typeOfException);
         }
     }
    //TestCase 2.3 Test For Improper Extension
@@ -99,9 +99,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.jpg");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.NO_FILE_FOUND,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.NO_FILE_FOUND,e.typeOfException);
         }
     }
     //TestCase 2.4 Test For Improper Delimiter
@@ -112,9 +112,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
    //TestCase 2.5 Test For Improper Header
@@ -125,9 +125,9 @@ public class StateCensusTest
         {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.csv");
         }
-        catch (CustomExceptions e)
+        catch (CSVBuilderException e)
         {
-            Assert.assertEquals(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+            Assert.assertEquals(CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
         }
     }
 

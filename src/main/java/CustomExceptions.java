@@ -7,8 +7,9 @@ public class CustomExceptions extends Exception {
     }
     public TypeOfException typeOfException;
 
-    public CustomExceptions(TypeOfException typeOfException)
+    public CustomExceptions(String message,TypeOfException typeOfException)
     {
+        super(message);
         this.typeOfException=typeOfException;
     }
 }

@@ -2,6 +2,15 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CSVStates
 {
+    public CSVStates(){
+    }
+    public CSVStates(String srNo, String stateName, String stateCode, String TIN) {
+        SrNo = srNo;
+        StateName = stateName;
+        StateCode = stateCode;
+        this.TIN = TIN;
+    }
+
     @CsvBindByName(column = "SrNo",required = true)
     private String SrNo;
 

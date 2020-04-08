@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import static java.nio.file.Files.newBufferedReader;
@@ -36,13 +37,18 @@ public class StateDataCensusAnalyser
                 System.out.println("StateCode :" +csvStates.getStateCode());
                 totalNumberOfRecords++;
             }
-        } catch (IOException e)
+        }
+        catch (NoSuchFileException e)
         {
-            throw new CustomExceptions(CustomExceptions.TypeOfException.NO_FILE_FOUND);
+            throw new CustomExceptions("NO_SUCH_FILE_FOUND..",CustomExceptions.TypeOfException.NO_FILE_FOUND);
         }
         catch (RuntimeException e)
         {
-            throw new CustomExceptions(CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+            throw new CustomExceptions("HEADER OR DELIMITER ERROR",CustomExceptions.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
         return totalNumberOfRecords;
     }

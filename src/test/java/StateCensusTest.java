@@ -9,7 +9,7 @@ public class StateCensusTest
     StateCensusAnalyser censusAnalyserObject = new StateCensusAnalyser();
     //test will pass when totalNumberOfRecords are 29
     @Test
-    public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws CustomExceptions
+    public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws Exception
     {
         Integer noOfRecords = censusAnalyserObject.readFile("./src/test/resources/StateCensusData.csv");
         Assert.assertEquals((Integer) 29, noOfRecords);
@@ -17,7 +17,7 @@ public class StateCensusTest
 
     //Test for improper file name
    @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException() throws IOException
+    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException() throws Exception
     {
         try
         {
@@ -31,7 +31,7 @@ public class StateCensusTest
 
     //Test Case 1.3 Name Correct but type Incorrect
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFileExtension_ReturnsException() throws IOException
+    public void givenStateCensusAnalyserFile_WhenImproperFileExtension_ReturnsException() throws Exception
     {
         try
         {
@@ -45,7 +45,7 @@ public class StateCensusTest
 
    //Test Case 1.4 Return Custom Exception for Incorrect Delimiter
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperDelimiter_ReturnsException() throws IOException
+    public void givenStateCensusAnalyserFile_WhenImproperDelimiter_ReturnsException() throws Exception
     {
         try
         {
@@ -59,7 +59,7 @@ public class StateCensusTest
 
     //Test case 1.5 Return Custom Exception For Improper Header
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperHeader_ReturnsException() throws IOException
+    public void givenStateCensusAnalyserFile_WhenImproperHeader_ReturnsException() throws Exception
     {
         try
         {
@@ -72,7 +72,8 @@ public class StateCensusTest
     }
     //Test case 2.1 Check Number Of Records are matches
     @Test
-    public void givenStateCode_WhenTrue_ReturnNumberOfRecordMatch() throws CustomExceptions {
+    public void givenStateCode_WhenTrue_ReturnNumberOfRecordMatch() throws Exception
+    {
         Integer result = censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.csv");
         Assert.assertEquals((Integer) 37, result);
 

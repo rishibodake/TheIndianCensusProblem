@@ -1,4 +1,5 @@
 
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
@@ -128,6 +129,21 @@ public class StateCensusTest
         catch (CSVBuilderException e)
         {
             Assert.assertEquals(CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION,e.typeOfException);
+        }
+    }
+//UC3 test for sorted data
+    @Test
+    public void givenIndianStateCensusData_WhenSorted_ReturnSortedResult(){
+        try
+        {
+            StateCensusAnalyser statesCensusAnalyser = new StateCensusAnalyser();
+            String stateWiseSortedData = statesCensusAnalyser.getStateWiseSortedData("src/test/resources/StateCensusData.csv");
+            CSVStateCensus[] CensusAnalysers = new Gson().fromJson(stateWiseSortedData, CSVStateCensus[].class);
+            Assert.assertEquals("Andhra Pradesh", CensusAnalysers[0].getState());
+        }
+        catch (CSVBuilderException e)
+        {
+
         }
     }
 

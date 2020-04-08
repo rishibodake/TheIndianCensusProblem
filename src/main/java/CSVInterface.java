@@ -1,8 +1,9 @@
 import java.io.Reader;
 import java.util.Iterator;
+import java.util.List;
+
 //Should have Introduced in Refactor 3 but insted in 2
-public class CSVInterface {
-    public <E> Iterator<E> getCSVfileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException{
-        return null;
+public interface CSVInterface {
+    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException ;
+    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass) throws CSVBuilderException ;
     }
-}

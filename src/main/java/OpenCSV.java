@@ -3,12 +3,21 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.Reader;
 import java.util.Iterator;
-class OpenCSV extends CSVInterface {
-    public static <E> Iterator<E> CSVfileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
-        return getCSVToBeen(reader,csvClass).iterator();
+import java.util.List;
+
+//Concrete class
+
+class OpenCSV implements CSVInterface {
+    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+        return this.getCSVToBeen(reader,csvClass).iterator();
     }
 
-    public static <E> CsvToBean<E> getCSVToBeen(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+        return this.getCSVToBeen(reader,csvClass).parse();
+    }
+
+//CSV Builder Class
+    private <E> CsvToBean<E> getCSVToBeen(Reader reader, Class<E> csvClass) throws CSVBuilderException {
         try {
             CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<E>(reader);
             csvToBeanBuilder.withType(csvClass);
@@ -17,6 +26,10 @@ class OpenCSV extends CSVInterface {
             return csvToBean;
         } catch (RuntimeException e) {
             throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return null;
     }
+
 }

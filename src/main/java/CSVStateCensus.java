@@ -12,16 +12,16 @@ public class CSVStateCensus
     }
     //binding the column names in CsvBindByName class
     @CsvBindByName(column = "State",required = true)
-    private String state;
+    public String state;
 
     @CsvBindByName(column = "Population",required = true)
-    private String population;
+    public String population;
 
     @CsvBindByName(column = "AreaInSqKm",required = true)
-    private String AreaInSqKm;
+    public String AreaInSqKm;
 
     @CsvBindByName(column = "DensityPerSqKm",required = true)
-    private String DensityPerSqKm;
+    public String DensityPerSqKm;
 
     //Getter Setters
     public String getState() {

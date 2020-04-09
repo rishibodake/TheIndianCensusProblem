@@ -14,96 +14,64 @@ import java.util.stream.StreamSupport;
 
 import static java.nio.file.Files.newBufferedReader;
 //State Code and State Census Classes in one class
-public class StateCensusAnalyser
-{
-    OpenCSV openCSV = new OpenCSV();
-    public Integer readFile(String filePath) throws Exception //it will load data from StateCensusDada.csv
+
+    public class StateCensusAnalyser <E>
     {
-        try (Reader reader = Files.newBufferedReader(Paths.get(filePath)) )
-        {
-            List<CSVStates> listCSVfile = openCSV.getCSVFileList(reader,CSVStates.class);
-            return listCSVfile.size();
+        //VARIABLES
+        private String CSV_FILE_PATH;
+        private final Class<E> csvClass;
+        List<E> csvUserList = null;
+        OpenCSV openCSV = new OpenCSV();
+
+        public StateCensusAnalyser(String path, Class<E> csvClass) {
+            this.CSV_FILE_PATH = path;
+            this.csvClass = csvClass;
         }
-        catch (NoSuchFileException e)
-        {
-            throw new CSVBuilderException("FILE IS NOT FOUND.",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
-        }
-        catch (RuntimeException e)
-        {
-            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
-        }
-        catch (Exception e)
-        {
-            e.getStackTrace();
-        }
-        return (null);
-    }
 
 
+        //METHOD TO LOAD RECORDS OF CSV FILE
+        public int loadRecords() throws CSVBuilderException {
+            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+                OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
+                csvUserList = csvBuilder.getCSVFileList(reader, csvClass);
+                return csvUserList.size();
+            } catch (NoSuchFileException e) {
+                throw new CSVBuilderException(e.getMessage(), CSVBuilderException.TypeOfException.NO_FILE_FOUND);
+            } catch (RuntimeException e) {
+                throw new CSVBuilderException(e.getMessage(), CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
 
-    public Integer loadIndianStateCodeData (String csvFilePath) throws CSVBuilderException
-    {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath)) )
-        {
-            List<CSVStates> listCSVfile = openCSV.getCSVFileList(reader,CSVStates.class);
-            return listCSVfile.size();
-        }
-        catch (NoSuchFileException e)
-        {
-            throw new CSVBuilderException("ENTERED FILE IS NOT FOUND..",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
-        }
-        catch (RuntimeException e)
-        {
-            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
-        }
-        catch (Exception e)
-        {
-            e.getStackTrace();
-        }
-            return null;
+            return 0;
         }
 
-    public String getStateWiseSortedData(String path) throws CSVBuilderException
-    {
-        try (Reader reader = Files.newBufferedReader(Paths.get(path)))
-        {
-            List<CSVStateCensus> listCSVfile = (List<CSVStateCensus>) openCSV.getCSVFileIterator(reader,CSVStateCensus.class);
-            Comparator<CSVStateCensus> censusComparator = Comparator.comparing(Census -> Census.getState());
-            this.sort(listCSVfile, censusComparator);
-            String sortedStateCensusjson = new Gson().toJson(listCSVfile);
-            return sortedStateCensusjson;
-
-        }
-        catch (NoSuchFileException e)
-        {
-            throw new CSVBuilderException("ENTERED FILE IS NOT FOUND..",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
-        }
-        catch (RuntimeException e)
-        {
-            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfException.INCORRECT_DELIMITER_HEADER_EXCEPTION);
-        }
-        catch ( IOException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
-    }
-//For Sorting the list
-    private void sort(List<CSVStateCensus> censusList, Comparator<CSVStateCensus> censusComparator)
-    {
-        for (int i = 0; i < censusList.size()-1; i++)
-        {
-            for(int j = 0; j < censusList.size()-i-1; j++)
+            public String SortedCensusData ()
             {
-                CSVStateCensus census1 = censusList.get(j);
-                CSVStateCensus census2= censusList.get(j+1);
-                if(censusComparator.compare(census1,census2) > 0)
-                {
-                    censusList.set(j, census2);
-                    censusList.set(j+1, census1);
+                Comparator<CSVStateCensus> CSVComparator = Comparator.comparing(census -> census.state);
+                this.sort((Comparator<E>) CSVComparator);
+                String SortedCSVJson = new Gson().toJson(csvUserList);
+                return SortedCSVJson;
+            }
+
+            public String SortedStateCodeData() {
+            Comparator<CSVStates> CodeComparator = Comparator.comparing(code -> code.StateCode);
+            this.sort((Comparator<E>) CodeComparator);
+            String SortedCodeJson = new Gson().toJson(csvUserList);
+            return SortedCodeJson;
+        }
+//For Sorting the list
+            private void sort (Comparator < E > csvComparator)
+            {
+                for (int i = 0; i < csvUserList.size() - 1; i++) {
+                    for (int j = 0; j < csvUserList.size() - i - 1; j++) {
+                        E census1 = csvUserList.get(j);
+                        E census2 = csvUserList.get(j + 1);
+                        if (csvComparator.compare(census1, census2) > 0) {
+                            csvUserList.set(j, census2);
+                            csvUserList.set(j + 1, census1);
+                        }
+                    }
                 }
             }
-        }
     }
-    }
-

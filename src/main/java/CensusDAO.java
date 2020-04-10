@@ -1,13 +1,22 @@
 public class CensusDAO {
-    public String state;
-    public String population;
-    public int area;
-    public int density;
+    public String State;
+    public long Population;
+    public long AreaInSqKm;
+    public int DensityPerSqkm;
+    public String StateCode;
+    public int TIN;
+    public int SrNo;
 
     public CensusDAO(CSVStateCensus stateCensusCSV) {
-        this.state = stateCensusCSV.state;
-        this.population = stateCensusCSV.population;
-        this.area = stateCensusCSV. AreaInSqKm;
-        this.density = stateCensusCSV. DensityPerSqKm;
+        this.State = stateCensusCSV.state;
+        this.Population = stateCensusCSV.Population;
+        this.AreaInSqKm = stateCensusCSV. AreaInSqKm;
+        this.DensityPerSqkm = stateCensusCSV. DensityPerSqKm;
+    }
+    public CensusDAO(CSVStates stateDataCSV) {
+        this.State = stateDataCSV.StateName;
+        this.SrNo = stateDataCSV.SrNo;
+        this.TIN = stateDataCSV.TIN;
+        this.StateCode = stateDataCSV.StateCode;
     }
 }

@@ -56,7 +56,7 @@ public class StateCensusTest
      }
    //Test Case 1.4 Return Custom Exception for Incorrect Delimiter
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperDelimiter_ReturnsException() throws Exception
+    public void givenStateCensusAnalyserFile_WhenImproperDelimiter_ReturnsException()
     {
 
          String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
@@ -73,7 +73,7 @@ public class StateCensusTest
 
     //Test case 1.5 Return Custom Exception For Improper Header
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperHeader_ReturnsException() throws Exception
+    public void givenStateCensusAnalyserFile_WhenImproperHeader_ReturnsException()
     {
         String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
          StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser();
@@ -88,7 +88,7 @@ public class StateCensusTest
     }
     //Test case 2.1 Check Number Of Records are matches
     @Test
-    public void givenStateCode_WhenTrue_ReturnNumberOfRecordMatch() throws Exception
+    public void givenStateCode_WhenTrue_ReturnNumberOfRecordMatch()
     {
        String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
          try
@@ -170,7 +170,7 @@ public class StateCensusTest
         {
              StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser();
              stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
-             String SortedData = stateCensusAnalyzer.SortedCensusData();
+             String SortedData = stateCensusAnalyzer.SortedStateCensusData();
              CSVStateCensus[] censusCSV = new Gson().fromJson(SortedData, CSVStateCensus[].class);
              Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
         }
@@ -188,13 +188,27 @@ public class StateCensusTest
         {
             StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser();
             stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
-            String SortedData = stateCensusAnalyzer.SortedStateCodeData();
+            String SortedData = stateCensusAnalyzer.SortedStateCensusData();
             CSVStates[] StateCodes = new Gson().fromJson(SortedData, CSVStates[].class);
             Assert.assertEquals("AD", StateCodes[0].StateCode);
         }
         catch (CSVBuilderException e)
         {
 
+        }
+    }
+
+    @Test
+    public void givenStateCensusData_WhenBasedSortSorted_ReturnSortedResult() {
+        final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
+        try {
+            StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser();
+            stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
+            String sortedCensusData = stateCensusAnalyzer.sortedPopulationWiseData();
+            CSVStateCensus[] statesCensusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+            Assert.assertEquals(199812341, statesCensusCSV[0].Population);
+        } catch ( CSVBuilderException e) {
+            e.getStackTrace();
         }
     }
 

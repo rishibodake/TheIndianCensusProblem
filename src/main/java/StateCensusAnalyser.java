@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 //Constructor without parameter
         public StateCensusAnalyser() {
             this.map = new HashMap<>();
+            this.list = new ArrayList<>();
+
         }
 
 
@@ -37,7 +39,6 @@ import java.util.stream.Collectors;
                 Iterator<CSVStateCensus> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
                 while (StateCensusCSVIterator.hasNext())
                 {
-                    CSVStateCensus stateCensusCSV=StateCensusCSVIterator.next();
                     CensusDAO censusDAO = new CensusDAO(StateCensusCSVIterator.next());
                     this.map.put(censusDAO.State, censusDAO);
                     list = map.values().stream().collect(Collectors.toList());
@@ -63,19 +64,24 @@ import java.util.stream.Collectors;
         //METHOD TO LOAD RECORDS OF STATE CODE
         public int loadData(String path) throws CSVBuilderException
         {
+            int numberOfRecords=0;
+            String extension = path.substring(path.lastIndexOf(".") + 1);
+            if (!extension.equals("csv"))
+            {
+                throw new CSVBuilderException("given file has wrong extension",CSVBuilderException.TypeOfException.NO_FILE_FOUND);
+            }
             try (Reader reader = Files.newBufferedReader(Paths.get(path)))
             {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
-                Iterator<CSVStates> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStates.class);
-                while (StateCensusCSVIterator.hasNext())
-                {
-                    CSVStates stateDataCSV = StateCensusCSVIterator.next();
-                    CensusDAO censusDAO=map.get(stateDataCSV.StateName);
-                    this.map.put(censusDAO.StateCode, censusDAO);
-                    list = map.values().stream().collect(Collectors.toList());;
+                Iterator<CSVStates> stateDataCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStates.class);
+                while (stateDataCSVIterator.hasNext()) {
+                    CSVStates stateDataCSV = stateDataCSVIterator.next();
+                    CensusDAO censusDAO = map.get(stateDataCSV.StateName);
+                    if (censusDAO == null)
+                        continue;
+                    censusDAO.StateCode = stateDataCSV.StateCode;
                 }
-                int numberOfRecords = map.size();
-                return numberOfRecords;
+                numberOfRecords = map.size();
             }
             catch (NoSuchFileException e)
             {
@@ -89,7 +95,7 @@ import java.util.stream.Collectors;
             {
                 e.printStackTrace();
             }
-            return 0;
+            return numberOfRecords;
         }
 
         public String SortedStateCensusData() throws CSVBuilderException
@@ -103,7 +109,7 @@ import java.util.stream.Collectors;
             String sortedStateCensusJson = new Gson().toJson(list);
             return sortedStateCensusJson;
         }
-
+//Function that sort data Pupulation Wise
         public String sortedPopulationWiseData() throws CSVBuilderException {
             if (list == null || list.size() == 0)
             {
@@ -114,6 +120,17 @@ import java.util.stream.Collectors;
             Collections.reverse(list);
             String sortedStateCodeJson = new Gson().toJson(list);
             return sortedStateCodeJson;
+        }
+//Function that can sort data density wise
+        public String sortedDataDensityWise() throws CSVBuilderException {
+            if (list == null || list.size() == 0) {
+                throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfException.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+            }
+            Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.DensityPerSqkm);
+            this.sortData(censusComparator);
+            Collections.reverse(list);
+            String sortedStateCensusJson = new Gson().toJson(list);
+            return sortedStateCensusJson;
         }
 
 

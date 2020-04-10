@@ -123,10 +123,23 @@ import java.util.stream.Collectors;
         }
 //Function that can sort data density wise
         public String sortedDataDensityWise() throws CSVBuilderException {
-            if (list == null || list.size() == 0) {
+            if (list == null || list.size() == 0)
+            {
                 throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfException.CENSUS_DATA_NOT_FOUND_EXCEPTION);
             }
             Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.DensityPerSqkm);
+            this.sortData(censusComparator);
+            Collections.reverse(list);
+            String sortedStateCensusJson = new Gson().toJson(list);
+            return sortedStateCensusJson;
+        }
+//Function that can sort states area wise
+        public String sortedDataAreaWise() throws CSVBuilderException {
+            if (list == null || list.size() == 0)
+            {
+                throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfException.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+            }
+            Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.AreaInSqKm);
             this.sortData(censusComparator);
             Collections.reverse(list);
             String sortedStateCensusJson = new Gson().toJson(list);

@@ -21,17 +21,23 @@ import java.util.stream.Collectors;
 
         OpenCSV openCSV = new OpenCSV();
 
+        //parametersied Constructor
         public StateCensusAnalyser(String path, Class<E> csvClass)
         {
             this.CSV_FILE_PATH = path;
             this.StateCensusCSVMap = new HashMap<>();
             this.StateDataCSVMap = new HashMap<>();
         }
+//Constructor without parameter
+        public StateCensusAnalyser() {
+            this.StateCensusCSVMap = new HashMap<>();
+            this.StateDataCSVMap = new HashMap<>();
+        }
 
 
         //METHOD TO LOAD RECORDS OF CSV FILE
-        public int loadRecords() throws CSVBuilderException {
-            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+        public int loadRecords(String path) throws CSVBuilderException {
+            try (Reader reader = Files.newBufferedReader(Paths.get(path))) {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
                 Iterator<CSVStateCensus> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
                 while (StateCensusCSVIterator.hasNext())
@@ -60,9 +66,9 @@ import java.util.stream.Collectors;
         }
 
         //METHOD TO LOAD RECORDS OF STATE CODE
-        public int loadData() throws CSVBuilderException
+        public int loadData(String path) throws CSVBuilderException
         {
-            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH)))
+            try (Reader reader = Files.newBufferedReader(Paths.get(path)))
             {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
                 Iterator<CSVStates> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStates.class);

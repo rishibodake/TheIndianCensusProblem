@@ -13,17 +13,15 @@ class OpenCSV implements CSVInterface {
                 .withType(csvClass)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build();
-        Iterator<E> csvUserIterator = csvToBean.iterator();
-        return csvUserIterator;
+        return csvToBean.iterator();
     }
+    @Override
+    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass)  {
+        CsvToBean csvToBean = new CsvToBeanBuilder(reader)
+                .withType(csvClass)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
+        return csvToBean.parse();
 
-
-//CSV Builder Class
-public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass) {
-    CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader)
-            .withType(csvClass)
-            .withIgnoreLeadingWhiteSpace(true);
-    return csvToBeanBuilder.build().parse();
-}
-
+    }
 }

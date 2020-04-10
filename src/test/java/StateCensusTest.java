@@ -94,7 +94,7 @@ public class StateCensusTest
          try
          {
              StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, CSVStates.class);
-             int numberOfRecords = stateCensusAnalyzer.loadRecords();
+             int numberOfRecords = stateCensusAnalyzer.loadData();
              Assert.assertEquals(37, numberOfRecords);
          }
          catch (CSVBuilderException e)

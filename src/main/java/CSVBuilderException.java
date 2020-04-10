@@ -2,8 +2,8 @@ public class CSVBuilderException extends Exception {
     public enum TypeOfException
     {
         NO_FILE_FOUND,
-        INCORRECT_DELIMITER_EXCEPTION,
-        INCORRECT_DELIMITER_HEADER_EXCEPTION
+        INCORRECT_DELIMITER_HEADER_EXCEPTION,
+        CENSUS_DATA_NOT_FOUND_EXCEPTION
     }
     public TypeOfException typeOfException;
 

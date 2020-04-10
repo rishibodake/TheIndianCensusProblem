@@ -3,7 +3,8 @@ public class CSVBuilderException extends Exception {
     {
         NO_FILE_FOUND,
         INCORRECT_DELIMITER_HEADER_EXCEPTION,
-        CENSUS_DATA_NOT_FOUND_EXCEPTION
+        CENSUS_DATA_NOT_FOUND_EXCEPTION,
+        UNABLE_TO_PARSE_EXCEPTION
     }
     public TypeOfException typeOfException;
 

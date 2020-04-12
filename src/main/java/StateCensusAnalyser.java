@@ -7,6 +7,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 //State Code and State Census Classes in one class
 
@@ -37,12 +38,10 @@ import java.util.stream.Collectors;
             {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
                 Iterator<CSVStateCensus> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
-                while (StateCensusCSVIterator.hasNext())
-                {
-                    CensusDAO censusDAO = new CensusDAO(StateCensusCSVIterator.next());
-                    this.map.put(censusDAO.State, censusDAO);
-                    list = map.values().stream().collect(Collectors.toList());
-                }
+                Iterable<CSVStateCensus> stateCensusIterable = () -> StateCensusCSVIterator;
+                StreamSupport.stream(stateCensusIterable.spliterator(), false)
+                        .forEach(stateCensusCSV -> map.put(stateCensusCSV.StateName, new CensusDAO(stateCensusCSV)));
+                list = map.values().stream().collect(Collectors.toList());
                 numberOfRecords=map.size();
             }
             catch (NoSuchFileException e)
@@ -74,13 +73,11 @@ import java.util.stream.Collectors;
             {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
                 Iterator<CSVStates> stateDataCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStates.class);
-                while (stateDataCSVIterator.hasNext()) {
-                    CSVStates stateDataCSV = stateDataCSVIterator.next();
-                    CensusDAO censusDAO = map.get(stateDataCSV.StateName);
-                    if (censusDAO == null)
-                        continue;
-                    censusDAO.StateCode = stateDataCSV.StateCode;
-                }
+                Iterable<CSVStates> stateCodeIterable = () -> stateDataCSVIterator;
+                StreamSupport.stream(stateCodeIterable.spliterator(), false)
+                        .filter(stateDataCSV -> map.get(stateDataCSV.StateName) != null)
+                        .forEach(stateDataCSV -> map.get(stateDataCSV.StateName).StateCode = stateDataCSV.StateCode);
+
                 numberOfRecords = map.size();
             }
             catch (NoSuchFileException e)

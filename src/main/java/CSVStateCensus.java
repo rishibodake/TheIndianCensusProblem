@@ -11,14 +11,14 @@ public class CSVStateCensus
     public long Population;
 
     @CsvBindByName(column = "AreaInSqKm",required = true)
-    public int AreaInSqKm;
+    public long AreaInSqKm;
 
     @CsvBindByName(column = "DensityPerSqKm",required = true)
-    public int DensityPerSqKm;
+    public long DensityPerSqKm;
 
 
 
-    public  CSVStateCensus(String name, int population, int area, int density ){
+    public  CSVStateCensus(String name, long population, long area, long density ){
         StateName=name;
         Population=population;
         AreaInSqKm=area;

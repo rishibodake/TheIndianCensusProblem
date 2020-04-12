@@ -2,11 +2,12 @@ import com.opencsv.bean.CsvBindByName;
 
 public class USCensusCSV {
 
-    public USCensusCSV(String name,long population, long area, int populationDensity){
+    public USCensusCSV(String stateID,String name,long population, long area, long populationDensity){
         StateName=name;
         Population = population;
         Area = area;
         PopulationDensity = populationDensity;
+        StateID=stateID;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class USCensusCSV {
     public String StateName;
 
     @CsvBindByName(column = "Population Density")
-    public int PopulationDensity;
+    public long PopulationDensity;
 
     @CsvBindByName(column = "Population")
     public long Population;

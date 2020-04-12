@@ -206,6 +206,20 @@ public class StateCensusTest {
         {
 
         }
-
     }
+
+    // Test Case For Sort The Data of USCensusCSV By Population
+    @Test
+    public void givenUSCensusData_WhenSortedByPopulation_ReturnSortedResult() {
+        final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
+        try {
+            censusAnalyzer.loadStateCensusCSVData(CensusAnalyser.Country.US, CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyzer.sortedDataPopulationWise();
+            USCensusCSV[] csvUsCensus = new Gson().fromJson(sortedCensusData,USCensusCSV[].class);
+            Assert.assertEquals("California",csvUsCensus[0].StateName);
+        } catch ( CSVBuilderException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

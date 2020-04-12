@@ -27,7 +27,6 @@ public class CSVStateCensus
 
     @Override
     public String toString(){
-        return "CSVStateCensus Data { " + "State Population : " +Population + ",State AreaInSqKm : " +AreaInSqKm + ",State DensityPerSqKm : " +DensityPerSqKm + "}";
-    }
+        return "StateCensusCSV Data { StateName :"+StateName + "State Population : " +Population + ",State AreaInSqKm : " +AreaInSqKm + ",State DensityPerSqKm : " +DensityPerSqKm + "}";    }
 
 }

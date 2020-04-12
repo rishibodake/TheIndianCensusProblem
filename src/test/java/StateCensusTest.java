@@ -139,7 +139,7 @@ public class StateCensusTest {
             stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
             String SortedData = stateCensusAnalyzer.SortedStateCensusData();
             CSVStateCensus[] censusCSV = new Gson().fromJson(SortedData, CSVStateCensus[].class);
-            Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
+            Assert.assertEquals("Andhra Pradesh", censusCSV[0].StateName);
         } catch (CSVBuilderException e) {
 
         }

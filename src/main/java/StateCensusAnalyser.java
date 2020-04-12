@@ -1,4 +1,6 @@
 import com.google.gson.Gson;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -8,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import static java.nio.file.Files.newBufferedReader;
+
 
 //State Code and State Census Classes in one class
 
@@ -27,7 +31,7 @@ import java.util.stream.StreamSupport;
 
 
         //METHOD TO LOAD RECORDS OF CSV FILE
-        public int loadRecords(String path) throws CSVBuilderException {
+        public int loadCensusData(String path) throws CSVBuilderException {
             int numberOfRecords = 0;
             String extension = path.substring(path.lastIndexOf(".") + 1);
             if (!extension.equals("csv"))
@@ -61,7 +65,7 @@ import java.util.stream.StreamSupport;
         }
 
         //METHOD TO LOAD RECORDS OF STATE CODE
-        public int loadData(String path) throws CSVBuilderException
+        public int loadStateData(String path) throws CSVBuilderException
         {
             int numberOfRecords=0;
             String extension = path.substring(path.lastIndexOf(".") + 1);
@@ -94,6 +98,37 @@ import java.util.stream.StreamSupport;
             }
             return numberOfRecords;
         }
+//Function that can load CSV data from USCensusData.csv
+        public int loadUSCensusCSVData(String path) throws CSVBuilderException
+        {
+            int noOfRecords = 0;
+            try (Reader reader = newBufferedReader(Paths.get(path)))
+            {
+                CsvToBean<USCensusCSV> usCensusCSV = new CsvToBeanBuilder(reader)
+                        .withType(USCensusCSV.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
+                Iterator<USCensusCSV> usCensusIterator = usCensusCSV.iterator();
+                while (usCensusIterator.hasNext())
+                {
+                    USCensusCSV USCensus = usCensusIterator.next();
+                    System.out.println("State ID: " + USCensus.StateID);
+                    System.out.println("State Name : " + USCensus.State);
+                    System.out.println("Area : " + USCensus.Area);
+                    System.out.println("Housing units : " + USCensus.HousingUnits);
+                    System.out.println("Water area : " + USCensus.WaterArea);
+                    System.out.println("Land Area : " + USCensus.LandArea);
+                    System.out.println("Density : " + USCensus.PopulationDensity);
+                    System.out.println("Population : " + USCensus.Population);
+                    System.out.println("Housing Density : " + USCensus.HousingDensity);
+                    noOfRecords++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return noOfRecords;
+        }
+
 
         public String SortedStateCensusData() throws CSVBuilderException
         {

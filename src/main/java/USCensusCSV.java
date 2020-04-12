@@ -40,7 +40,5 @@ public class USCensusCSV {
     @CsvBindByName(column = "Land Area")
     public String LandArea;
 
-    @CsvBindByName(column = "Housing Density")
-    public float HousingDensity;
 
 }

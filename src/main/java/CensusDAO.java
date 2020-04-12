@@ -2,7 +2,6 @@ import java.util.Comparator;
 
 public class CensusDAO {
     public String StateID;
-    public float HousingDensity;
     public String StateName;
     public long Population;
     public long AreaInSqKm;
@@ -30,7 +29,6 @@ public class CensusDAO {
         this.Population = usCensusCSV.Population;
         this.AreaInSqKm= usCensusCSV.Area;
         this.DensityPerSqkm = usCensusCSV.PopulationDensity;
-        this.HousingDensity = usCensusCSV.HousingDensity;
     }
 
     public static Comparator<CensusDAO> getSortComparator(CensusAnalyser.SortingMode mode) {
@@ -48,27 +46,12 @@ public class CensusDAO {
     public long getPopulation() {
         return Population;
     }
-
-    public void setPopulation(long population) {
-        Population = population;
-    }
-
     public long getAreaInSqKm() {
         return AreaInSqKm;
     }
-
-    public void setAreaInSqKm(long areaInSqKm) {
-        AreaInSqKm = areaInSqKm;
-    }
-
     public long getDensityPerSqkm() {
         return DensityPerSqkm;
     }
-
-    public void setDensityPerSqKm(long densityPerSqkm) {
-        DensityPerSqkm = densityPerSqkm;
-    }
-
     public Object getCensusDTO(CensusAnalyser.Country country)
     {
         if (country.equals(CensusAnalyser.Country.INDIA))

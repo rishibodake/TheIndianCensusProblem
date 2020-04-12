@@ -4,4 +4,8 @@ public class CSVBuilderFactory
     {
         return new OpenCSV();
     }
+
+    public static OpenCSV createCSVBuilder() {
+        return null;
+    }
 }

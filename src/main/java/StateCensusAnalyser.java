@@ -44,7 +44,7 @@ import static java.nio.file.Files.newBufferedReader;
                 Iterator<CSVStateCensus> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
                 Iterable<CSVStateCensus> stateCensusIterable = () -> StateCensusCSVIterator;
                 StreamSupport.stream(stateCensusIterable.spliterator(), false)
-                        .forEach(stateCensusCSV -> map.put(stateCensusCSV.StateName, new CensusDAO(stateCensusCSV)));
+                        .forEach(stateCensusCSV -> map.put(stateCensusCSV.StateName, new CensusDAO(densityPerSqKm, stateCensusCSV)));
                 list = map.values().stream().collect(Collectors.toList());
                 numberOfRecords=map.size();
             }

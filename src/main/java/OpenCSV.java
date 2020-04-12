@@ -10,7 +10,7 @@ import java.util.List;
 class OpenCSV implements CSVInterface
 {
     @Override
-    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException
+    public <E> Iterator<E> getCSVIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException
     {
         try {
                 CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
@@ -26,7 +26,7 @@ class OpenCSV implements CSVInterface
     }
 
     @Override
-    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass) throws CSVBuilderException
+    public <E> List<E> getCSVList(Reader reader, Class<E> csvClass) throws CSVBuilderException
     {
         try {
                 CsvToBean csvToBean = new CsvToBeanBuilder(reader)

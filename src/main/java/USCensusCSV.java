@@ -16,28 +16,28 @@ public class USCensusCSV {
     }
 
 
-    @CsvBindByName(column = "State Id")
+    @CsvBindByName(column = "State Id",required = true)
     public String StateID;
 
-    @CsvBindByName(column = "StateName")
+    @CsvBindByName(column = "StateName",required = true)
     public String StateName;
 
-    @CsvBindByName(column = "Population Density")
+    @CsvBindByName(column = "Population Density",required = true)
     public long PopulationDensity;
 
-    @CsvBindByName(column = "Population")
+    @CsvBindByName(column = "Population",required = true)
     public long Population;
 
-    @CsvBindByName(column = "Total area")
+    @CsvBindByName(column = "Total area",required = true)
     public long Area;
 
-    @CsvBindByName(column = "Housing units")
+    @CsvBindByName(column = "Housing units",required = true)
     public String HousingUnits;
 
-    @CsvBindByName(column = "Water area")
+    @CsvBindByName(column = "Water area",required = true)
     public String WaterArea;
 
-    @CsvBindByName(column = "Land Area")
+    @CsvBindByName(column = "Land Area",required = true)
     public String LandArea;
 
 
